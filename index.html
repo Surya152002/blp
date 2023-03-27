@@ -47,28 +47,79 @@
         var marker, circle, lat, long, accuracy;
 
         function getPosition(position) {
-            // console.log(position)
-            lat = position.coords.latitude
-            long = position.coords.longitude
-            accuracy = position.coords.accuracy
+          lat = position.coords.latitude
+          long = position.coords.longitude
+          accuracy = position.coords.accuracy
 
-            if (marker) {
-                map_init.removeLayer(marker)
-            }
+          if (marker) {
+            map_init.removeLayer(marker)
+          }
 
-            if (circle) {
-                map_init.removeLayer(circle)
-            }
+          if (circle) {
+            map_init.removeLayer(circle)
+          }
 
-            marker = L.marker([lat, long])
-            circle = L.circle([lat, long], { radius: accuracy })
+          marker = L.marker([lat, long])
+          circle = L.circle([lat, long], { radius: accuracy })
 
-            var featureGroup = L.featureGroup([marker, circle]).addTo(map_init)
+          var featureGroup = L.featureGroup([marker, circle]).addTo(map_init)
 
-            map_init.fitBounds(featureGroup.getBounds())
+          map_init.fitBounds(featureGroup.getBounds())
 
-            console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy)
+          // Define the 4 points of interest
+          var points = [
+            {lat: 9.0830, long: 8.6755}, // Point 1
+            {lat: 9.0825, long: 8.6752}, // Point 2
+            {lat: 9.0827, long: 8.6758}, // Point 3
+            {lat: 9.0818, long: 8.6747}  // Point 4
+          ];
+
+          // Find the nearest point to the user's location
+          var nearest = points.reduce(function(prev, curr) {
+            var prevDist = getDistance(lat, long, prev.lat, prev.long);
+            var currDist = getDistance(lat, long, curr.lat, curr.long);
+            return (prevDist < currDist) ? prev : curr;
+          });
+
+          // Mark the nearest point on the map
+          L.marker([nearest.lat, nearest.long]).addTo(map_init);
+
+          console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy);
+
+          // Start timing and calculate time spent in each location
+          var now = new Date();
+          var timeInLocation = getTimeInLocation(now, nearest);
+          console.log("Time spent in nearest location: " + timeInLocation);
         }
+
+        function getDistance(lat1, long1, lat2, long2) {
+          var R = 6371e3; // Earth's radius in meters
+          var phi1 = toRadians(lat1);
+          var phi2 = toRadians(lat2);
+          var deltaPhi = toRadians(lat2 - lat1);
+          var deltaLambda = toRadians(long2 - long1);
+
+          var a = Math.sin(deltaPhi/2) * Math.sin(deltaPhi/2) +
+                  Math.cos(phi1) * Math.cos(phi2) *
+                  Math.sin(deltaLambda/2) * Math.sin(deltaLambda/2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+          return R * c;
+        }
+
+        function toRadians(degrees) {
+          return degrees * Math.PI / 180;
+        }
+
+        function getTimeInLocation(now, point) {
+          var timeInMs = now.getTime() - point.time.getTime();
+          var secondsInLocation = Math.floor(timeInMs / 1000);
+          var minutesInLocation = Math.floor(secondsInLocation / 60);
+          var hoursInLocation = Math.floor(minutesInLocation / 60);
+          var timeString = hoursInLocation + "h " + (minutesInLocation % 60) + "m " + (secondsInLocation % 60) + "s";
+          return timeString;
+        }
+
     </script>
 </body>
 
