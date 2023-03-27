@@ -67,12 +67,13 @@
           map_init.fitBounds(featureGroup.getBounds())
 
           // Define the 4 points of interest
-          var points = [
-            {lat: 9.0830, long: 8.6755}, // Point 1
-            {lat: 9.0825, long: 8.6752}, // Point 2
-            {lat: 9.0827, long: 8.6758}, // Point 3
-            {lat: 9.0818, long: 8.6747}  // Point 4
-          ];
+          const points = [
+          {lat: 12.9302529, lon: 80.1472514},
+          {lat: 12.9302531, lon: 80.1472510},
+          {lat: 12.9302528, lon: 80.1472508},
+          {lat: 12.9302526, lon: 80.1472512},
+          {lat: 12.9302533, lon: 80.1472511}
+        ];
 
           // Find the nearest point to the user's location
           var nearest = points.reduce(function(prev, curr) {
