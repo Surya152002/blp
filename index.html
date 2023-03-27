@@ -41,10 +41,9 @@
         var score = 100000;
         var waitingInterval = setInterval(() => {
             navigator.geolocation.getCurrentPosition(getPosition);
-            score -= 10000;
+            score -= 10;
             var messageDiv = document.getElementById("message");
-            messageDiv.innerHTML = "You've been waiting for " + ((score/1000)*10) + " seconds. Score: " + score;
-        }, 10000);
+            
 
         function getPosition(position) {
         // console.log(position)
