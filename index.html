@@ -45,7 +45,7 @@
             var elapsedTime = currentTime - startTime;
             score = Math.max(0, score - elapsedTime);
             var messageDiv = document.getElementById("message");
-            
+            alert("Your points is: " + score);
             messageDiv.innerHTML = "You've been waiting for " + (elapsedTime/1000) + " seconds. Score: " + score;
         }, 10000);
         alert("Your points is: " + score);
