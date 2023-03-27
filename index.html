@@ -45,10 +45,10 @@
             var elapsedTime = currentTime - startTime;
             score = Math.max(0, score - elapsedTime);
             var messageDiv = document.getElementById("message");
-            alert("Points"+score);
+            
             messageDiv.innerHTML = "You've been waiting for " + (elapsedTime/1000) + " seconds. Score: " + score;
         }, 10000);
-        alert("points :"+score);
+        
             
 
         function getPosition(position) {
@@ -78,7 +78,7 @@
         console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy);
             
 
-        var displayScore = prompt("Do you want to display your score? Enter 'yes' or 'no'."+ score);
+        var displayScore = prompt("Do you want to display your score? Enter 'yes' or 'no'.");
 
         if (displayScore === "yes") {
             alert("Your score is: " + score);
