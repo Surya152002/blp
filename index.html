@@ -22,6 +22,7 @@
 </head>
 
 <body>
+    <h1>You have Started Using Smart Car Parking System</h1>
     <div id="map"></div>
     <div id="message"></div>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -37,6 +38,7 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map_init);
         L.Control.geocoder().addTo(map_init);
+        var bal=    1000000;
         var score = 1000000;
         var startTime = Date.now();
         var waitingTimeout = setTimeout(() => {
@@ -46,7 +48,7 @@
             score = Math.max(0, score - elapsedTime);
             var messageDiv = document.getElementById("message");
             alert("Your points is: " + score);
-            messageDiv.innerHTML = "You've been waiting for " + (elapsedTime/1000) + " seconds. Score: " + score;
+            messageDiv.innerHTML = "You've been Parked car with balance"+bal+"detected  Amount: " + score;
         }, 10000);
         alert("Your points is: " + score);
             
