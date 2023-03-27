@@ -68,12 +68,13 @@
 
           // Define the 4 points of interest
           const points = [
-          {lat: 12.9302529, lon: 80.1472514},
-          {lat: 12.9302531, lon: 80.1472510},
-          {lat: 12.9302528, lon: 80.1472508},
-          {lat: 12.9302526, lon: 80.1472512},
-          {lat: 12.9302533, lon: 80.1472511}
-        ];
+              {lat: 12.9302529, lon: 80.1472514, time: new Date()},
+              {lat: 12.9302531, lon: 80.1472510, time: new Date()},
+              {lat: 12.9302528, lon: 80.1472508, time: new Date()},
+              {lat: 12.9302526, lon: 80.1472512, time: new Date()},
+              {lat: 12.9302533, lon: 80.1472511, time: new Date()}
+            ];
+
 
           // Find the nearest point to the user's location
           var nearest = points.reduce(function(prev, curr) {
@@ -117,9 +118,10 @@
           var secondsInLocation = Math.floor(timeInMs / 1000);
           var minutesInLocation = Math.floor(secondsInLocation / 60);
           var hoursInLocation = Math.floor(minutesInLocation / 60);
-          var timeString = hoursInLocation + "h " + (minutesInLocation % 60) + "m " + (secondsInLocation % 60) + "s";
-          return timeString;
+
+          return hoursInLocation + " hours, " + (minutesInLocation % 60) + " minutes, " + (secondsInLocation % 60) + " seconds";
         }
+
 
     </script>
 </body>
