@@ -38,11 +38,16 @@
         }).addTo(map_init);
         L.Control.geocoder().addTo(map_init);
 
-        var score = 100000;
-        var waitingInterval = setInterval(() => {
+        var startTime = Date.now();
+        var waitingTimeout = setTimeout(() => {
             navigator.geolocation.getCurrentPosition(getPosition);
-            score -= 10;
+            var currentTime = Date.now();
+            var elapsedTime = currentTime - startTime;
+            score = Math.max(0, score - elapsedTime);
             var messageDiv = document.getElementById("message");
+            messageDiv.innerHTML = "You've been waiting for " + (elapsedTime/1000) + " seconds. Score: " + score;
+        }, 10000);
+
             
 
         function getPosition(position) {
