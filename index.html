@@ -1,5 +1,4 @@
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,99 +29,44 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script>
         var map_init = L.map('map', {
-            center: [12.9302528, 80.1472512],
-            zoom: 0
+            center: [9.0820, 8.6753],
+            zoom: 8
         });
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map_init);
         L.Control.geocoder().addTo(map_init);
-        if (!navigator.geolocation) {
-            console.log("Your browser doesn't support geolocation feature!")
-        } else {
-            setInterval(() => {
-                navigator.geolocation.getCurrentPosition(getPosition)
-            }, 5000);
-        };
-        var marker, circle, lat, long, accuracy;
+
+        var score = 100000;
+        var waitingInterval = setInterval(() => {
+            navigator.geolocation.getCurrentPosition(getPosition);
+            score -= 10000;
+            console.log("You've been waiting for " + ((score/1000)*10) + " seconds. Score: " + score);
+        }, 10000);
 
         function getPosition(position) {
-          lat = position.coords.latitude
-          long = position.coords.longitude
-          accuracy = position.coords.accuracy
+            // console.log(position)
+            var lat = position.coords.latitude;
+            var long = position.coords.longitude;
+            var accuracy = position.coords.accuracy;
 
-          if (marker) {
-            map_init.removeLayer(marker)
-          }
+            if (marker) {
+                map_init.removeLayer(marker);
+            }
 
-          if (circle) {
-            map_init.removeLayer(circle)
-          }
+            if (circle) {
+                map_init.removeLayer(circle);
+            }
 
-          marker = L.marker([lat, long])
-          circle = L.circle([lat, long], { radius: accuracy })
+            var marker = L.marker([lat, long]);
+            var circle = L.circle([lat, long], { radius: accuracy });
 
-          var featureGroup = L.featureGroup([marker, circle]).addTo(map_init)
+            var featureGroup = L.featureGroup([marker, circle]).addTo(map_init);
 
-          map_init.fitBounds(featureGroup.getBounds())
+            map_init.fitBounds(featureGroup.getBounds());
 
-          // Define the 4 points of interest
-          const points = [
-              {lat: 12.9302529, lon: 80.1472514, time: new Date()},
-              {lat: 12.9302531, lon: 80.1472510, time: new Date()},
-              {lat: 12.9302528, lon: 80.1472508, time: new Date()},
-              {lat: 12.9302526, lon: 80.1472512, time: new Date()},
-              {lat: 12.9302533, lon: 80.1472511, time: new Date()}
-            ];
-
-
-          // Find the nearest point to the user's location
-          var nearest = points.reduce(function(prev, curr) {
-            var prevDist = getDistance(lat, long, prev.lat, prev.long);
-            var currDist = getDistance(lat, long, curr.lat, curr.long);
-            return (prevDist < currDist) ? prev : curr;
-          });
-
-          // Mark the nearest point on the map
-          L.marker([nearest.lat, nearest.long]).addTo(map_init);
-
-          console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy);
-
-          // Start timing and calculate time spent in each location
-          var now = new Date();
-          var timeInLocation = getTimeInLocation(now, nearest);
-          console.log("Time spent in nearest location: " + timeInLocation);
+            console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy);
         }
-
-        function getDistance(lat1, long1, lat2, long2) {
-          var R = 6371e3; // Earth's radius in meters
-          var phi1 = toRadians(lat1);
-          var phi2 = toRadians(lat2);
-          var deltaPhi = toRadians(lat2 - lat1);
-          var deltaLambda = toRadians(long2 - long1);
-
-          var a = Math.sin(deltaPhi/2) * Math.sin(deltaPhi/2) +
-                  Math.cos(phi1) * Math.cos(phi2) *
-                  Math.sin(deltaLambda/2) * Math.sin(deltaLambda/2);
-          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-          return R * c;
-        }
-
-        function toRadians(degrees) {
-          return degrees * Math.PI / 180;
-        }
-
-        function getTimeInLocation(now, point) {
-          var timeInMs = now.getTime() - point.time.getTime();
-          var secondsInLocation = Math.floor(timeInMs / 1000);
-          var minutesInLocation = Math.floor(secondsInLocation / 60);
-          var hoursInLocation = Math.floor(minutesInLocation / 60);
-
-          return hoursInLocation + " hours, " + (minutesInLocation % 60) + " minutes, " + (secondsInLocation % 60) + " seconds";
-        }
-
-
     </script>
 </body>
 
