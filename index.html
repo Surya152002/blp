@@ -23,6 +23,7 @@
 
 <body>
     <div id="map"></div>
+    <div id="message"></div>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
@@ -41,7 +42,8 @@
         var waitingInterval = setInterval(() => {
             navigator.geolocation.getCurrentPosition(getPosition);
             score -= 10000;
-            console.log("You've been waiting for " + ((score/1000)*10) + " seconds. Score: " + score);
+            var messageDiv = document.getElementById("message");
+            messageDiv.innerHTML = "You've been waiting for " + ((score/1000)*10) + " seconds. Score: " + score;
         }, 10000);
 
         function getPosition(position) {
@@ -64,6 +66,11 @@
             var featureGroup = L.featureGroup([marker, circle]).addTo(map_init);
 
             map_init.fitBounds(featureGroup.getBounds());
+
+            var messageDiv = document.getElementById("message");
+            //messageDiv.innerHTML = "Your coordinate is: Lat: " + lat + "
+
+            
 
             console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy);
         }
