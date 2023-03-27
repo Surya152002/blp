@@ -47,33 +47,38 @@
         }, 10000);
 
         function getPosition(position) {
-            // console.log(position)
-            var lat = position.coords.latitude;
-            var long = position.coords.longitude;
-            var accuracy = position.coords.accuracy;
+        // console.log(position)
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        var accuracy = position.coords.accuracy;
 
-            if (marker) {
-                map_init.removeLayer(marker);
-            }
-
-            if (circle) {
-                map_init.removeLayer(circle);
-            }
-
-            var marker = L.marker([lat, long]);
-            var circle = L.circle([lat, long], { radius: accuracy });
-
-            var featureGroup = L.featureGroup([marker, circle]).addTo(map_init);
-
-            map_init.fitBounds(featureGroup.getBounds());
-
-            var messageDiv = document.getElementById("message");
-            //messageDiv.innerHTML = "Your coordinate is: Lat: " + lat + "
-
-            
-
-            console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy);
+        if (marker) {
+            map_init.removeLayer(marker);
         }
+
+        if (circle) {
+            map_init.removeLayer(circle);
+        }
+
+        var marker = L.marker([lat, long]);
+        var circle = L.circle([lat, long], { radius: accuracy });
+
+        var featureGroup = L.featureGroup([marker, circle]).addTo(map_init);
+
+        map_init.fitBounds(featureGroup.getBounds());
+
+        var messageDiv = document.getElementById("message");
+        //messageDiv.innerHTML = "Your coordinate is: Lat: " + lat + "
+
+        console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy);
+
+        var displayScore = prompt("Do you want to display your score? Enter 'yes' or 'no'.");
+
+        if (displayScore === "yes") {
+            alert("Your score is: " + score);
+        }
+    }
+
     </script>
 </body>
 
