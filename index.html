@@ -37,7 +37,7 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map_init);
         L.Control.geocoder().addTo(map_init);
-
+        var score = 1000000;
         var startTime = Date.now();
         var waitingTimeout = setTimeout(() => {
             navigator.geolocation.getCurrentPosition(getPosition);
