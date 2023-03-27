@@ -48,7 +48,8 @@
             score = Math.max(0, score - elapsedTime);
             var messageDiv = document.getElementById("message");
             alert("Your points is: " + score);
-            messageDiv.innerHTML = "You've been Parked car with balance"+bal+"detected  Amount: " + score;
+            var date = new Date();
+            messageDiv.innerHTML = "You've been Parked car with balance  "+bal+" Detected  Amount: " + score+"At Time : "+date;
         }, 10000);
         alert("Your points is: " + score);
             
