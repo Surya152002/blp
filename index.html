@@ -38,19 +38,19 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map_init);
         L.Control.geocoder().addTo(map_init);
-        var bal=    1000000;
-        var score = 1000000;
+        var bal=    10000;
+        var score = 10000;
         var startTime = Date.now();
         var waitingTimeout = setTimeout(() => {
             navigator.geolocation.getCurrentPosition(getPosition);
             var currentTime = Date.now();
             var elapsedTime = currentTime - startTime;
-            score = Math.max(0, score - elapsedTime);
+            score = Math.max(0, score - elapsedTime/100);
             var messageDiv = document.getElementById("message");
             alert("Your points is: " + score);
             var date = new Date();
             messageDiv.innerHTML = "You've been Parked car with balance  "+bal+" Remaining  Amount: " + score+" At Time : "+date;
-        }, 10000);
+        }, 1000);
         alert("Your points is: " + score);
             
 
