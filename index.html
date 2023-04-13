@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    <h1>You have Started Using Smart Car Parking System</h1>
+    <h1>Roardv Track</h1>
     <div id="map"></div>
     <div id="message"></div>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -47,11 +47,11 @@
             var elapsedTime = currentTime - startTime;
             score = Math.max(0, score - elapsedTime/100);
             var messageDiv = document.getElementById("message");
-            alert("Your points is: " + score);
+            //alert("Your points is: " + score);
             var date = new Date();
             messageDiv.innerHTML = "You've been Parked car with balance  "+bal+" Remaining  Amount: " + score+" At Time : "+date;
         }, 1000);
-        alert("Your points is: " + score);
+        //alert("Your points is: " + score);
             
 
         function getPosition(position) {
@@ -81,11 +81,11 @@
         console.log("Your coordinate is: Lat: " + lat + " Long: " + long + " Accuracy: " + accuracy+"Score : "+score);
             
 
-        var displayScore = prompt("Do you want to display your score? Enter 'yes' or 'no'.");
+        //var displayScore = prompt("Do you want to display your score? Enter 'yes' or 'no'.");
 
-        if (displayScore === "yes") {
-            alert("Your points is: " + score);
-        }
+//         if (displayScore === "yes") {
+//             alert("Your points is: " + score);
+//         }
     }
 
     </script>
